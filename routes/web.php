@@ -5,6 +5,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BlogHomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,9 @@ Route::prefix('admin')->middleware('auth')->group(function() {
         Route::any('trash', [PageController::class, 'trash'])->name('trash.page');
         Route::any('callback/{id}', [PageController::class, 'callBack'])->name('callback.page');
     });
+
+    Route::get('settings',[SettingsController::class,'index'])->name('admin.settings');
+    Route::post('settings/update',[SettingsController::class,'update'])->name('update.settings');
 });
 
 Route::prefix('bloghome')->group(function(){
@@ -60,3 +64,7 @@ Route::prefix('bloghome')->group(function(){
 
 Route::any('category/{category}',[BlogHomeController::class,'category'])->name('category.show');
 Route::any('{page}',[BlogHomeController::class,'page'])->name('page');
+
+Route::get('maintenance', function (){
+   view('front.offline');
+});

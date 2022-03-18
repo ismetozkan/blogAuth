@@ -7,12 +7,18 @@ use App\Models\Category;
 use App\Models\Article;
 use App\Models\Page;
 use App\Models\Contact;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class BlogHomeController extends Controller
 {
     public function __construct()
     {
+        if(Setting::find(1)->status==0){
+            return redirect()->to('maintenance')->send();
+        }
+
         view()->share('pages',Page::orderBy('order','ASC')->get());
         view()->share('categories',Category::all());
     }
@@ -68,15 +74,32 @@ class BlogHomeController extends Controller
             return redirect()->route('contact')->withErrors($validator)->withInput();
         }
 
+        //FOR SENDING MAIL
+
+        Mail::raw('Who Sending :'.$request->name.'</br>'.
+                        'Sending from :'.$request->email.'</br>'.
+                        'Subject :'.$request->subject.'</br>'.
+                        'Message :'.$request->message
+
+
+        ,function ($message) use ($request) {
+            $message->from('ilet@blog.com','some user');
+            $message->to('ismetozkan32@hotmail.com');
+            $message->subject($request->name.' tarafından');
+        });
+
+        //FOR SAVE IN DATABASE
+
+        /*
         $contact = new Contact();
         $contact->fill([
             'name'=>$request->get('name'),
             'email'=>$request->get('email'),
             'subject'=>$request->get('subject'),
             'message'=>$request->get('message')
-
         ]);
         $contact->save();
+        */
 
         return redirect()->route('contact')->with('success','Message Has Delivered');
 

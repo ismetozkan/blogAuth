@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ismetozkan</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('front/assets/favicon.ico') }}" />
+    <title>@yield('title')-{{ $settings->title }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset($settings->favicon) }}" />
     <!-- Font Awesome icons (free version)-->
     <script src="//use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -19,7 +19,9 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="{{ route('bloghome.index') }}">Blog Page</a>
+        <a class="navbar-brand" href="{{ route('bloghome.index') }}">
+            <img src="{{ asset($settings->logo) }}" width="50">
+</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>

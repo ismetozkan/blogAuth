@@ -128,7 +128,7 @@ class ArticleController extends Controller
         if ($request->hasFile('image')){
             $imageName=Str::slug($request->title).'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('uploads'),$imageName);
-            $article->image='public/uploads/'.$imageName;
+            $article->image='uploads/'.$imageName;
 
         }
         $article->save();
