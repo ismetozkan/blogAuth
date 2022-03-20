@@ -169,4 +169,12 @@ class ArticleController extends Controller
         $article->forceDelete();
         return redirect()->route('trash');
     }
+
+    public function changeStatus(Request $request)
+    {
+        $articles = Article::find($request->id);
+        $articles->status = $request->status;
+        $articles->save();
+
+    }
 }

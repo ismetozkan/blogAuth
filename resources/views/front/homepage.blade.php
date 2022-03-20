@@ -1,6 +1,6 @@
 
 @extends('front.layouts.master')
-@section('title','HOME')
+@section('title',$settings->title)
 @section('content')
 <!-- Main Content-->
     <div class="container">

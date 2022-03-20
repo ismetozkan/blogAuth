@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Contact;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Setting;
@@ -27,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->share('settings',Setting::find(1));
         Paginator::useBootstrap();
+        view()->share('contacts',Contact::all());
     }
 }

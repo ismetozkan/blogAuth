@@ -24,7 +24,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register'=> false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -68,3 +68,5 @@ Route::any('{page}',[BlogHomeController::class,'page'])->name('page');
 Route::get('maintenance', function (){
    view('front.offline');
 });
+
+Route::get('changeStatus',[ArticleController::class,'changeStatus'])->name('changeStatus');

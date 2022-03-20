@@ -30,8 +30,10 @@
                         <td>{{ $article->getCategory->name }}</td>
                         <td>{{ $article->hit }}</td>
                         <td>{{ $article->created_at->diffForHumans() }}</td>
-                        <td>{!! $article->status == 0  ? "<span class='text-danger'>Passive</span>"
-                                                       :"<span class='text-success'>Active</span>" !!}
+                        <td>
+                            <label>
+                                <input data-id="{{$article->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $article->status ? 'checked' : '' }}>
+                            </label>
                         </td>
                         <td>
                             <a target="_blank" href="{{ route('single.blog',[$article->slug]) }}" title="Show" class="btn btn-sm btn-success"><i class="fa fa-eye"></i></a>
@@ -40,10 +42,27 @@
                         </td>
                     </tr>
                 @endforeach
-                </tbody>
             </table>
         </div>
     </div>
 </div>
+<script>
+    $(function() {
+        $('.toggle-class').change(function() {
+            var status = $(this).prop('checked') == true ? 1 : 0;
+            var id = $(this).data('id');
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: '/changeStatus',
+                data: {'status': status, 'id': id},
+                success: function(data){
+                    console.log(data.success())
+                }
+            });
+        })
+    })
+</script>
 @endsection
 

@@ -25,7 +25,7 @@ class BlogHomeController extends Controller
 
     public function index()
     {
-        $data['articles'] = Article::orderBy('created_at', 'DESC')->paginate(2);
+        $data['articles'] = Article::orderBy('created_at', 'DESC')->where('status',1)->paginate(2);
 
         return view('front.homepage', $data);
     }
@@ -90,7 +90,6 @@ class BlogHomeController extends Controller
 
         //FOR SAVE IN DATABASE
 
-        /*
         $contact = new Contact();
         $contact->fill([
             'name'=>$request->get('name'),
@@ -99,7 +98,7 @@ class BlogHomeController extends Controller
             'message'=>$request->get('message')
         ]);
         $contact->save();
-        */
+
 
         return redirect()->route('contact')->with('success','Message Has Delivered');
 
