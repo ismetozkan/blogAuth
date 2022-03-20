@@ -49,8 +49,8 @@
 <script>
     $(function() {
         $('.toggle-class').change(function() {
-            var status = $(this).prop('checked') == true ? 1 : 0;
-            var id = $(this).data('id');
+            status = $(this).prop('checked') === true ? 1 : 0;
+            id = $(this).data('id');
 
             $.ajax({
                 type: "POST",
