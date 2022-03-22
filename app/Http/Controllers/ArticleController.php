@@ -173,8 +173,7 @@ class ArticleController extends Controller
     public function changeStatus(Request $request)
     {
         $articles = Article::find($request->id);
-        $articles->status = $request->status;
+        $articles->status = $request->status == 'true' ? 1 : 0;
         $articles->save();
-
     }
 }

@@ -53,6 +53,8 @@ Route::prefix('admin')->middleware('auth')->group(function() {
 
     Route::get('settings',[SettingsController::class,'index'])->name('admin.settings');
     Route::post('settings/update',[SettingsController::class,'update'])->name('update.settings');
+
+    Route::any('changeStatus',[ArticleController::class,'changeStatus'])->name('changeStatus');
 });
 
 Route::prefix('bloghome')->group(function(){
@@ -69,4 +71,3 @@ Route::get('maintenance', function (){
    view('front.offline');
 });
 
-Route::get('changeStatus',[ArticleController::class,'changeStatus'])->name('changeStatus');

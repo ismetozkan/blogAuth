@@ -25,7 +25,7 @@ class BlogHomeController extends Controller
 
     public function index()
     {
-        $data['articles'] = Article::orderBy('created_at', 'DESC')->where('status',1)->paginate(2);
+        $data['articles'] = Article::orderBy('created_at', 'DESC')->where('status',0)->paginate(5);
 
         return view('front.homepage', $data);
     }

@@ -32,7 +32,7 @@
                         <td>{{ $article->created_at->diffForHumans() }}</td>
                         <td>
                             <label>
-                                <input data-id="{{$article->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $article->status ? 'checked' : '' }}>
+                                <input data-id="{{$article->id}}" data-status="{{ $article->status }}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Passive" {{ $article->status ? 'checked' : '' }}>
                             </label>
                         </td>
                         <td>
@@ -46,23 +46,30 @@
         </div>
     </div>
 </div>
-<script>
-    $(function() {
-        $('.toggle-class').change(function() {
-            status = $(this).prop('checked') === true ? 1 : 0;
-            id = $(this).data('id');
-
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: '/changeStatus',
-                data: {'status': status, 'id': id},
-                success: function(data){
-                    console.log(data.success())
-                }
-            });
-        })
-    })
-</script>
 @endsection
 
+@section('footerScript')
+    <script>
+        $(document).ready(function (){
+            $('[data-toggle="toggle"]').on('click', function(e) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: '{{ route('changeStatus') }}',
+                    data: {
+                        'status': $(this).find('[type="checkbox"]').prop('checked'),
+                        'id': $(this).find('[type="checkbox"]').data('id')
+                    },
+                    success: function(data){
+                        console.log(data.success())
+                    }
+                });
+            });
+
+            $.each($('[data-toggle="toggle"]').find('[type="checkbox"]'), function (key, item){
+                var status = $(item).data('status') == 0 ? 'on' : 'off';
+                $(item).bootstrapToggle(status);
+            })
+        });
+    </script>
+@endsection
